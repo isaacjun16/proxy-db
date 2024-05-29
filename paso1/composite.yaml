@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  mysql-primario:
+    image: mysql:8.0
+    container_name: mysql-primario
+    environment:
+      MYSQL_ROOT_PASSWORD: root # Contraseña del usuario root, usaremos la misma en ambas DB para facilitar la configuración
+      MYSQL_DATABASE: testdb # Debe ser el mismo nombre en la base de datos secundaria
+      MYSQL_USER: # Por buenas practicas se crea un usuario especifico para la DB
+      MYSQL_PASSWORD: # Contraseña para el usuario creado
+    ports:
+      - "3306:3306"
+    volumes:
+      - primario_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password # En resumen este plugin es para utilizar la forma de auntenticacion antigua antes de usar autenticacion por plugin. Mas info en https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html
+
+  mysql-secundario:
+    image: mysql:8.0
+    container_name: mysql-secundario
+    environment:
+      MYSQL_ROOT_PASSWORD: root # Contraseña del usuario root, usaremos la misma en ambas DB para facilitar la configuración
+      MYSQL_DATABASE: testdb # Debe ser el mismo nombre en la base de datos secundaria
+      MYSQL_USER: # Por buenas practicas se crea un usuario especifico para la DB
+      MYSQL_PASSWORD: # Contraseña para el usuario creado
+    ports:
+      - "3307:3306"
+    volumes:
+      - secundario_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password # En resumen este plugin es para utilizar la forma de auntenticacion antigua antes de usar autenticacion por plugin. Mas info en https://dev.mysql.com/doc/refman/8.0/en/native-pluggable-authentication.html
+
+# Estos volumen se crean en el directior de Docker ver para saber ubicacion 
+# ir a https://www.freecodecamp.org/espanol/news/donde-se-almacenan-las-imagenes-de-docker-rutas-de-contenedores-docker-explicadas/#la-ubicaci-n-de-almacenamiento-de-im-genes-y-contenedores-de-docker
+    
+volumes:
+  primario_data: 
+  secundario_data:
