@@ -42,4 +42,4 @@ docker exec -it mysql_r1_n1 mysqlsh --uri root@mysql_r1_n1:3306
 
 ## Diagrama ClusterSet
 
-<span>![</span><span>Diagrama</span><span>]</span><span>(</span><span>https://raw.githubusercontent.com/parzibyte/WaterPy/master/assets/ImagenV1.png</span><span>)</span>
+[Diagrama](https://github.com/isaacjun16/proxy-db/blob/cb06d7b57afc2a14c40d675c2e5015e79e3afd56/cluster_docker.drawio.png)
