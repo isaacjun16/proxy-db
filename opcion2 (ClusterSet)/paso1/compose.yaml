@@ -1,0 +1,133 @@
+version: '3.8'
+
+services:
+  # Región 1 - MySQL Nodos
+  mysql_r1_n1:
+    image: mysql:8.0
+    container_name: mysql_r1_n1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3331:3306"
+    networks:
+      - cluster_net
+
+  mysql_r1_n2:
+    image: mysql:8.0
+    container_name: mysql_r1_n2
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3332:3306"
+    networks:
+      - cluster_net
+
+  mysql_r1_n3:
+    image: mysql:8.0
+    container_name: mysql_r1_n3
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3333:3306"
+    networks:
+      - cluster_net
+
+  # Región 1 - HAProxy
+  haproxy_r1:
+    image: haproxy:latest
+    container_name: haproxy_r1
+    volumes:
+      - ./haproxy/haproxy_r1.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    ports:
+      - "5001:5001"
+    networks:
+      - cluster_net
+
+  # Región 2 - MySQL Nodos
+  mysql_r2_n1:
+    image: mysql:8.0
+    container_name: mysql_r2_n1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "4441:3306"
+    networks:
+      - cluster_net
+
+  mysql_r2_n2:
+    image: mysql:8.0
+    container_name: mysql_r2_n2
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "4442:3306"
+    networks:
+      - cluster_net
+
+  mysql_r2_n3:
+    image: mysql:8.0
+    container_name: mysql_r2_n3
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "4443:3306"
+    networks:
+      - cluster_net
+
+  # Región 2 - HAProxy
+  haproxy_r2:
+    image: haproxy:latest
+    container_name: haproxy_r2
+    volumes:
+      - ./haproxy/haproxy_r2.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    ports:
+      - "5002:5001"
+    networks:
+      - cluster_net
+
+  # Región 3 - MySQL Nodos
+  mysql_r3_n1:
+    image: mysql:8.0
+    container_name: mysql_r3_n1
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "5551:3306"
+    networks:
+      - cluster_net
+
+  mysql_r3_n2:
+    image: mysql:8.0
+    container_name: mysql_r3_n2
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "5552:3306"
+    networks:
+      - cluster_net
+
+  mysql_r3_n3:
+    image: mysql:8.0
+    container_name: mysql_r3_n3
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "5553:3306"
+    networks:
+      - cluster_net
+
+  # Región 3 - HAProxy
+  haproxy_r3:
+    image: haproxy:latest
+    container_name: haproxy_r3
+    volumes:
+      - ./haproxy/haproxy_r3.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    ports:
+      - "5003:5001"
+    networks:
+      - cluster_net
+
+networks:
+  cluster_net:
+    driver: bridge
+
