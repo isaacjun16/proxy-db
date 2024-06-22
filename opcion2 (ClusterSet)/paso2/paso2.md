@@ -80,6 +80,11 @@ clusterSet.status();
 // Obtenemos el Cluster set despues de una desconexion
 \c root@mysql_r1_n1:3306
 var clusterSet = dba.getClusterSet();
+
+// Forcar cambio de region primaria en caso fallo en region (Ej. cambiando region 2 a region primaria)
+\c root@mysql_r2_n1:3306
+var clusterSet = dba.getClusterSet();
+clusterSet.forcePrimaryCluster('Region2Cluster');
 ```
 
 

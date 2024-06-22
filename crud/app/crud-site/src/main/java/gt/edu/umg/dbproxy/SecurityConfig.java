@@ -46,13 +46,11 @@ public class SecurityConfig {
 		http.csrf(AbstractHttpConfigurer::disable)
 		.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry ->
 		authorizationManagerRequestMatcherRegistry.requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
-		.requestMatchers("/admin/**").hasAnyRole("ADMIN")
-        .anyRequest().authenticated())
+		.requestMatchers("/admin/**").authenticated()
+        .anyRequest().permitAll())
 		.httpBasic(Customizer.withDefaults())
 		.sessionManagement(httpSecuritySessionManagementConfigurer -> 
-		httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-		.formLogin((login) -> login.defaultSuccessUrl("/admin", true).permitAll())
-		.logout((logout) -> logout.logoutSuccessUrl("/").permitAll());
+		httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		
 		return http.build();
     }
